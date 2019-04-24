@@ -55,6 +55,7 @@ workflows:
             tags:
               only: /^v.*/
       - deploy:
+          context: troven
           requires:
             - test
           filters:
