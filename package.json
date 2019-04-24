@@ -1,5 +1,5 @@
 {
-  "name": "api-service",
+  "name": "api-service-main",
   "version": "0.32.8",
   "description": "NodeJS micro-chassis common plugins",
   "main": "lib/index.js",
