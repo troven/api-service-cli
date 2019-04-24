@@ -2,21 +2,21 @@
 
 /*************************************************************************
  *
- * APIGEEKS CONFIDENTIAL
+ * Troven CONFIDENTIAL
  * __________________
  *
- *  (c) 2017-2019 API Geeks Pty Ltd
+ *  (c) 2017-2019 Troven Pty Ltd
  *  All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
- * the property of API Geeks Pty Ltd and its licensors,
+ * the property of Troven Pty Ltd and its licensors,
  * if any.  The intellectual and technical concepts contained
- * herein are proprietary to API Geeks Pty Ltd
+ * herein are proprietary to Troven Pty Ltd
  * and its suppliers and may be covered by International and Regional Patents,
  * patents in process, and are protected by trade secret or copyright law.
  * Dissemination of this information or reproduction of this material
  * is strictly forbidden unless prior written permission is obtained
- * from API Geeks Pty Ltd.
+ * from Troven Pty Ltd.
  */
 
 import * as common from "api-service-common";

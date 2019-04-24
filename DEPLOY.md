@@ -3,12 +3,12 @@ Pipeline
 
 Configuration
 -------------
-    export NEXUS_USERNAME=apigeeks
+    export NEXUS_USERNAME=Troven
     export NEXUS_PASSWORD=change-me
 
 Optionally:
-    # export NEXUS_HOST=nexus.lab.apigeeks.com
-    # export K8S_NAME=apigeeks-lab
+    # export NEXUS_HOST=nexus.lab.troven.co
+    # export K8S_NAME=Troven-lab
 
 To publish NPM and Docker images
 
@@ -26,17 +26,17 @@ Example
 
 the home page uses a static_asset policy (i.e. files injected via sidecar)
 
-	https://node-chassis-service.lab.apigeeks.com/
+	https://node-chassis-service.lab.troven.co/
 
 this uses a "side-car” plugin (local)
 
-	https://node-chassis-service.lab.apigeeks.com/example1
+	https://node-chassis-service.lab.troven.co/example1
 
 this uses a bulit-in policy
 
-	https://node-chassis-service.lab.apigeeks.com/heartbeat
+	https://node-chassis-service.lab.troven.co/heartbeat
 
 this has a JWT policy (401 Unauthorized)
 
-	https://node-chassis-service.lab.apigeeks.com/example2
+	https://node-chassis-service.lab.troven.co/example2
 

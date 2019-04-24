@@ -61,7 +61,7 @@ Minimal Configuration
 Each Chassis must be declared with a name and a port. The simplest configuration would be some YAML like this:
 
 ```
-    name: apigeeks-chassis-example
+    name: Troven-chassis-example
     port: 5005
 ```
 
@@ -216,7 +216,7 @@ features:
 
         authorize_jwt:
           claims:
-            iss: https://login.lab.apigeeks.com/auth/realms/apigeeks
+            iss: https://login.lab.troven.co/auth/realms/Troven
 
 ```
 
@@ -239,10 +239,10 @@ Configuration from Environment
 The injection algorithm is simply: remove the prefix, convert to lower case, convert `_` to `.` then treat the result as a JSON path to update the config.
 
 ```
-    export A6S_NAME=my-chassis-example
-    export A6S_PORT=5005
-    export A6S_AUDITOR_ENABLED=true
-    export A6S_AUDITOR_FILE_FILENAME=my-chassis.log
+    export APIS_NAME=my-chassis-example
+    export APIS_PORT=5005
+    export APIS_AUDITOR_ENABLED=true
+    export APIS_AUDITOR_FILE_FILENAME=my-chassis.log
 ```
 
 At runtime, the chassis will deeply inject the following:
