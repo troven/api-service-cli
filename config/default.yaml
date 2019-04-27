@@ -1,2 +1,39 @@
 name: api-service
 port: 5000
+
+features:
+  json:
+    enabled: true
+  openapi:
+    enabled: true
+
+
+openapi:
+  servers:
+    - url: https://example.demo.troven.co/v1
+  info:
+    title: Debug OpenAPI
+  paths:
+
+    /healthz:
+      get:
+        summary: Health check
+        feature:
+          operationId: api.heartbeat
+        responses:
+         '200':
+            description: "200 response"
+            content:
+              application/json: {}
+
+    /swagger:
+      get:
+        summary: Open API docs
+        operationId: swagger_api_docs
+        feature:
+          operationId: api.apidocs
+        responses:
+         '200':
+            description: "200 response"
+            content:
+              application/json: {}

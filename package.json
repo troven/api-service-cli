@@ -1,6 +1,6 @@
 {
   "name": "api-service-main",
-  "version": "0.33.17",
+  "version": "0.33.20",
   "description": "NodeJS micro-chassis common plugins",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -15,10 +15,9 @@
     "@types/assert": "^1.4.1",
     "@types/lodash": "^4.14.119",
     "api-service-common": "^0.4.16",
-    "api-service-core": "^0.33.17",
     "assert": "^1.4.1",
     "config": "^1.31.0",
-    "js-yaml": "^3.12.0",
+    "js-yaml": "^3.13.1",
     "lodash": "^4.17.11",
     "yamljs": "^0.3.0"
   },
