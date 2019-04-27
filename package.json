@@ -1,6 +1,6 @@
 {
   "name": "api-service-main",
-  "version": "0.33.20",
+  "version": "0.33.21",
   "description": "NodeJS micro-chassis common plugins",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
