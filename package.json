@@ -12,7 +12,6 @@
   "author": "cto@troven.co",
   "license": "ISC",
   "dependencies": {
-    "@types/assert": "^1.4.1",
     "@types/lodash": "^4.14.119",
     "api-service-common": "^0.4.16",
     "assert": "^1.4.1",
