@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 
 import { default_features } from "./index";
 import { Chassis  } from "api-service-core";
