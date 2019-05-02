@@ -4,6 +4,10 @@ port: 5000
 features:
   json:
     enabled: true
+  render:
+    enabled: true
+    brand:
+      title: "Example Page" 
   openapi:
     enabled: true
 
@@ -14,6 +18,16 @@ openapi:
   info:
     title: Debug OpenAPI
   paths:
+
+    /view/:page:
+      get:
+        feature:
+          operationId: api.render
+          apis:
+            health:
+              url: http://localhost:5000/healthz
+            apidocs:
+              url: http://localhost:5000/swagger
 
     /healthz:
       get:

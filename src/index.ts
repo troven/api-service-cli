@@ -40,6 +40,7 @@ let default_plugins = function() {
     this.registerPlugin( new common.prometheus );
     this.registerPlugin( new common.ua );
     this.registerPlugin( new common.views );
+    this.registerPlugin( new common.render );
     this.registerPlugin( new common.webhooks );
     this.registerPlugin( new core.openapi );
 }
