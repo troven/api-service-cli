@@ -70,7 +70,7 @@ The logging sub-system captures JSON based log messages that follow a lightweigh
 ```
     logging:
       file:
-        filename: node-chassis.log
+        filename: api-service.log
 ```
 The auditor sub-system captures JSON based audit messages that follow a lightweight convention. An audit is a user-driven activity.
 
@@ -78,7 +78,7 @@ The auditor sub-system captures JSON based audit messages that follow a lightwei
     auditor:
       enabled: true
       file:
-        filename: node-chassis-audit.log
+        filename: api-service-audit.log
 ```
 
 Configuring Features

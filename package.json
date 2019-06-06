@@ -1,7 +1,7 @@
 {
   "name": "api-service-main",
-  "version": "0.36.5",
-  "description": "NodeJS micro-chassis common plugins",
+  "version": "0.37.1",
+  "description": "NodeJS api-service common plugins",
   "main": "lib/index.js",
   "bin": {
     "api-www": "bin/start.sh"
@@ -16,8 +16,8 @@
   "license": "ISC",
   "dependencies": {
     "@types/lodash": "^4.14.119",
-    "api-service-core": "^0.37.5",
-    "api-service-common": "^0.7.5",
+    "api-service-core": "^0.38.1",
+    "api-service-common": "^0.8.1",
     "assert": "^1.4.1",
     "config": "^1.31.0",
     "js-yaml": "^3.13.1",
