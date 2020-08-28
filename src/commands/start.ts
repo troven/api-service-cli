@@ -3,7 +3,7 @@ import { Chassis } from "api-service-core";
 import { default_features  } from "api-service-common";
 import { MongoStore  } from "api-service-mongo";
 import { ControllerPlugin } from "api-service-controller";
-const config = require("config");
+import { existsSync } from 'fs'
 
 export default class Start extends Command {
   static description = 'start the API services defined in the ./config/ file'
@@ -21,6 +21,13 @@ export default class Start extends Command {
 
   async run() {
     const {args, flags} = this.parse(Start)
+
+    if ( !existsSync("config") ) {
+      this.log("ERROR: a6s is not configured. Please run `a6s init` to initialize");
+      process.exit(1);
+    }
+
+    const config = require("config");
 
     this.log(`starting ...`)
 

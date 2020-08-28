@@ -1,13 +1,13 @@
-export default () => {
-  console.log("copying config");
+export default (name: string) => {
+  console.log("copying config: %s", name);
 
   return {
-    "name": "a6s-default",
+    "name": name,
     "port": 5008,
     "auditor": {
       "enabled": true,
       "File": {
-        "filename": "api-controller.audit.log"
+        "filename": name+".log"
       }
     },
     "logging": {
@@ -42,13 +42,10 @@ export default () => {
       "controller": {
         "enabled": true,
         "crd": false,
-        "folder": "./k8s/"
+        "folder": "./oasv3/"
       },
-      "mongodb": {
-        "host": "localhost",
-        "port": 27017,
-        "database": "example",
-        "ssl": false
+      "localdb": {
+        "database": "example"
       }
     },
     "openapi": {
@@ -58,7 +55,7 @@ export default () => {
         }
       ],
       "info": {
-        "title": "Controller OpenAPI"
+        "title": "Controller OpenAPI for "+name
       },
       "paths": {
         "/": {

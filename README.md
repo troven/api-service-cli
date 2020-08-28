@@ -1,18 +1,31 @@
-API micro-services
-------------------
+API services
+------------
 
-This project is a micro-framework to simplify the creation of sophisticated, policy-driven micro-services based on an annotated OpenAPI specification.
+This project is a micro-framework to simplify the creation of policy-driven micro-services based on an annotated OpenAPI specification.
 
-Once configured, requests can be served by either a `Plugin` or an `Operation`.
+Initial Setup
+-----------
 
-- An `Operation` is middleware that returns a response. It can be bound to one or more OpenAPI resources.
+```
+mkdir my-project
+a6s init
+```
 
-- A `Plugin` is a strategy - it can be used to serve multiple endpoints - or do something else entirely.
+This will create two directories `config` and `oasv3`. 
+
+The `config` folder contains a YAML file that configures the runtime service and global features (plugins). 
+It may, optionally, include an initial OpenAPI definition.
+
+The `oasv3` folder also contains an example YAML file that specifies the OpenAPI v3 resources and the features that they represent.
+
+Additional OpenAPI v3 definition resources can be included in this folder.
 
 API Endpoints
 -----------
 
-Most API endpoints are defined by an OpenAPI specification. The Chassis supports OpenAPI (OAS) v3 only.
+Each API endpoint is defined by the OpenAPI specification. The specificiation 
+
+The Chassis supports OpenAPI (OAS) v3 only.
 
 The configuration uses OpenAPIv3 to define the endpoints and associated middleware operations.  
 

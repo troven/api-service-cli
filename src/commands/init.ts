@@ -35,8 +35,9 @@ export default class Init extends Command {
     exec('mkdir config', this.handle_error);
     exec('mkdir oasv3', this.handle_error);
     this.log("copying ...");
-    writeFileSync("config/default.yaml", Yaml.stringify(default_config(),8));
-    writeFileSync("oasv3/default.yaml", Yaml.stringify(default_openapi(),8));
+    const name: string = "a6s-init-example"
+    writeFileSync("config/default.yaml", Yaml.stringify(default_config(name),8));
+    writeFileSync("oasv3/default.yaml", Yaml.stringify(default_openapi(name),8));
 
   }
 }
