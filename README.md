@@ -172,30 +172,3 @@ Note: the defaults used by the chassis are different from the `http-proxy-middle
   changeOrigin: true
   xfwd: true
  ```
-
-
-Faking a  JWT
--------------
-
-from another terminal, invoke the physical API endpoint:
-
-```
-export FAKE_JWT="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjdG9AYXBpZ2Vla3MuY29tIiwibmFtZSI6IkFQSTpHZWVrcyIsImlhdCI6MTUxNjIzOTAyMiwicm9sZXMiOlsiZXhhbXBsZTphcGk6Z2VuZXJpYyIsImV4YW1wbGU6YXBpOmhlYWx0aHoiLCJleGFtcGxlOmFwaTpzd2FnZ2VyIl19.Xx9hFMLLTCWplmfeQHEkaUUlZTmQ_0dSk0fsxRikNRg"
-
-curl http://localhost:5005/healthz -H "authorization: Bearer $FAKE_JWT"
-
-curl http://localhost:5005/swagger -H "authorization: Bearer $FAKE_JWT"
-```
-
-To create your own synthetic JWT, see [https://jwt.io](https://jwt.io) and paste a JWT payload something like this:
-
-```
-{
-  "sub": "cto@example.com",
-  "name": "Local:Example",
-  "iat": 1516239022,
-  "roles": [ "example:api:heartbeat" ]
-}
-```
-
-The `roles` field is critical. Roles are used to validate against the scopes from the configured Open API specification.
