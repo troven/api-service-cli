@@ -19,6 +19,17 @@ export default class Start extends Command {
 
   static args = [{name: 'file'}]
 
+  static chassis() {
+    const config = require("config");
+    // configure a new chassis
+    let chassis = new Chassis(config, default_features);
+
+    // register our custom plugin
+    chassis.registerPlugin( new ControllerPlugin() );
+    chassis.registerPlugin( new MongoStore() );
+    return chassis;
+  }
+
   async run() {
     const {args, flags} = this.parse(Start)
 
@@ -27,17 +38,10 @@ export default class Start extends Command {
       process.exit(1);
     }
 
-    const config = require("config");
 
     this.log(`starting ...`)
 
-    // configure a new chassis
-    let chassis = new Chassis(config, default_features);
-
-    // register our custom plugin
-    chassis.registerPlugin( new ControllerPlugin() );
-    chassis.registerPlugin( new MongoStore() );
-
+    const chassis = Start.chassis();
     // start the Chassis ...
     chassis.start();
 

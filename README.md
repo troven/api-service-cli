@@ -3,8 +3,15 @@ API services
 
 This project is a micro-framework to simplify the creation of policy-driven micro-services based on an annotated OpenAPI specification.
 
-Initial Setup
------------
+Installation
+------------
+
+```
+npm -g api-services-cli
+```
+
+Initialize Project
+------------------
 
 ```
 mkdir my-project
@@ -20,51 +27,25 @@ The `oasv3` folder also contains an example YAML file that specifies the OpenAPI
 
 Additional OpenAPI v3 definition resources can be included in this folder.
 
-API Endpoints
------------
+Start Services
+--------------
 
-Each API endpoint is defined by the OpenAPI specification. The specificiation 
-
-The Chassis supports OpenAPI (OAS) v3 only.
-
-The configuration uses OpenAPIv3 to define the endpoints and associated middleware operations.  
-
-The OpenAPI spec defines the resources, methods, operations and the security policies.
-
-No requests are served by default - a working configuration is required. 
-
-The api-service uses a YAML language to describe APIs as configuration file - the OAS definition can be embedded or loaded from a file. 
-
-OpenAPI Configuration
----------------------
-
-In the `openapi` section of the configuration, we need to specify only the minimum necessary to serve requests.
-
-In the common case that means adding the `chassis` declaration to an endpoint:
+Once configured (using `a6s init` or manually), then you can start the API Services:
 
 ```
-openapi:
-  paths:
-    /healthz:
-      get:
-        chassis:
-          operationId: api.heartbeat
+a6s start
 ```
-
-NOTE: Due to the root `openapi` key, the normal values are 1-indent deeper than standard OASv3 YAML.
 
 Configuration
 -------------
 
-The Chassis is driven by the configuration (YAML) file that declares the plugins, the OpenAPI spec and policies.
+`a6s` reads the configuration (YAML) file to initialize the global features and the default OpenAPI definition.
 
-The chassis incorporates non-functional support for 12-factor applications, logging and auditing.
-
-The chassis loads it's configuration from the ./config folder. Configurations can be specified in JSON or YAML.
+The command loads it's configuration from the `./config` folder. Configurations can be specified in JSON or YAML. 
 
 The implementation uses the [npm config package](https://github.com/lorenwest/node-config/wiki/Configuration-Files)
 
-First, the chassis loads the `default.json/default.yaml` file from the `./config` folder.
+By default, the chassis loads the `default.yaml` file from the `./config` folder.
 
 Then it merges the config file that relates to the current NODE_ENV (or "development" if unset)
 
@@ -74,177 +55,28 @@ Minimal Configuration
 Each Chassis must be declared with a name and a port. The simplest configuration would be some YAML like this:
 
 ```
-    name: Troven-chassis-example
-    port: 5005
-```
-
-The logging sub-system captures JSON based log messages that follow a lightweight convention. A log is a system / debug level activity.
-
-```
-    logging:
-      file:
-        filename: api-service.log
-```
-The auditor sub-system captures JSON based audit messages that follow a lightweight convention. An audit is a user-driven activity.
-
-```
-    auditor:
-      enabled: true
-      file:
-        filename: api-service-audit.log
+    name: example
+    port: 5008
 ```
 
 Configuring Features
 --------------------
 
-The basic Chassis can be upgraded using Feature Plugins.
+Feature plugins are installed and initialized when `a6s` starts.
 
-Feature Plugins are installed and initialized when the Chassis starts.
+A useful suite of default plugins are baked-in but new plugins can be developed relatively easily.
 
-A suite of default plugins are baked-in, new plugins can be easily developed.
-
-To enable a feature, simply configure it by name:
+To enable a feature, simply configure it using it's registered name:
 
 ```
 features:
-  cors:
-    enabled: true
-  json:
+  payload:
     enabled: true
   openapi:
     enabled: true
 ```
 
-NOTE: Each plugin is `enabled` by default.
-
-Endpoint Feature
-----------------
-
-The chassis needs to know how to map an incoming request to a functional endpoint.
-
-Each resource/method in the OpenAPI specification can (and should) be assigned an operation.
-
-For example:
-
-```
-openapi:
-  paths:
-    /example:
-      get:
-        operationId: heartbeat_ignored_by_chassis
-        chassis
-            operationId: api.heartbeat
-            message: hello world
-```
-
-The `chassis` options are augmented at runtime with various parameters.
-
-The `chassis.operationId` will be used to lookup the feature - not the method's operationId.
-
-Proxy Endpoint
---------------
-
-The proxy feature will forward requests to a remote target and return the response.
-
-This is used to expose 3rd party endpoints (internal micro-services, cloud providers, etc) as a simple reverse proxy.
-
-```
-/proxy/healthz:
-  get:
-    summary: Health check via proxy
-      chassis:
-        operationId: api.proxy
-        target: http://localhost:5005/healthz
- ```
-
-Advanced proxy options can be found at [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware#http-proxy-options).
-
-Note: the defaults used by the chassis are different from the `http-proxy-middleware` implementation:
-
- ```
-  ignorePath: true
-  pathRewrite: true
-  changeOrigin: true
-  xfwd: true
- ```
-
-OpenAPI Security
-----------------
-
-The OAS security policies can be enforced.
-
-The root security policy will be used unless the operation specifies a policy.
-
-```
-openapi:
-  security:
-    - jwt: [ "example:api:generic" ]
-  info:
-  paths:
-
-    /healthz:
-      get:
-        chassis:
-          operationId: api.heartbeat
-        security:
-        - jwt: [ "example:api:heartbeat" ]
-```
-
-The `jwt` scheme must be defined in `components.securitySchemes` like this:
-
-```
-components:
-  securitySchemes:
-    jwt:
-      type: http
-      scheme: bearer
-      description: JWT bearer key to authorize requests.
-      bearerFormat: JWT
-      name: authorization
-      in: header
-```
-
-Current only "http" type and "bearer" scheme are supported at runtime.
-
-TODO: support more schemes, for example: `apikey`, `openid` and `oauth2`
-
-Securing Endpoints
-------------------
-
-Additional security features are available.
-
-If we want to enforce security before every request, we can do this with the `before` feature.
-
-With `authenticate_jwt`, we assert the JWT is valid and signed by the `certificateFile`.
-
-With `authorize_jwt`, we match claims against the decoded JWT.
-
-```
-features:
-    before:
-
-        authenticate_jwt:
-          client_id: test-lab
-          certificateFile: ./local/keycloak-public.pem
-
-        authorize_jwt:
-          claims:
-            iss: https://oauth.pro/auth/realms/example
-
-```
-
-Resolving operationId
----------------------
-
-The OpenAPI "operationId" is not used by the chassis. It must be unique across all resources.
-
-The Chassis uses the operationId in x-chassis options as the name for the IChassisMiddleware.
-
-If no match is found, the chassis will abort with a fatal error.
-
-The plugins are loaded by the `start.js` bootstrap file. 
-
-For a custom plugin / chassis, you can copy code from `api-service-example`.
+The `openapi` feature is effectively mandatory if OpenAPI definitions are required. 
 
 Configuration from Environment
 ------------------------------
@@ -295,23 +127,55 @@ The merged result is stored into the `openapi` field in the runtime config.
 
 At runtime, for example in a plugin - the uplifted specification is available as "context.openapi".
 
-Start Example Service
----------------------
+Defining Operations
+-------------------
 
-Check out the example:
+Each resource/method in the OpenAPI specification can (and should) be assigned an operation.
+
+For example:
 
 ```
-cd api-service
-npm link
-cd..
-cd api-service-example
-npm link api-service
-npm install
-npm start
+openapi:
+  paths:
+    /hello_world:
+      get:
+        feature
+          heartbeat:
+            message: hello world
 ```
 
-Acquiring a Fake JWT
---------------------
+The `feature` options are augmented at runtime with various parameters, including from the global configuration.
+
+Proxy Feature
+--------------
+
+The proxy feature will forward requests to a remote target and return the response.
+
+This is used to expose 3rd party endpoints (internal micro-services, cloud providers, etc) as a simple reverse proxy.
+
+```
+/proxy/healthz:
+  get:
+    summary: Health check via proxy
+      feature:
+        proxy:
+          target: http://localhost:5005/healthz
+ ```
+
+Advanced proxy options can be found at [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware#http-proxy-options).
+
+Note: the defaults used by the chassis are different from the `http-proxy-middleware` implementation:
+
+ ```
+  ignorePath: true
+  pathRewrite: true
+  changeOrigin: true
+  xfwd: true
+ ```
+
+
+Faking a  JWT
+-------------
 
 from another terminal, invoke the physical API endpoint:
 
