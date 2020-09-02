@@ -2,7 +2,7 @@ import {Command, flags} from '@oclif/command'
 import { Chassis } from "api-service-core";
 import { default_features  } from "api-service-common";
 import { MongoStore  } from "api-service-mongo";
-import { ControllerPlugin } from "api-service-controller";
+import { ControllerPlugin, ConfigsPlugin } from "api-service-controller";
 import { existsSync } from 'fs'
 
 export default class Start extends Command {
@@ -26,6 +26,7 @@ export default class Start extends Command {
 
     // register our custom plugin
     chassis.registerPlugin( new ControllerPlugin() );
+    chassis.registerPlugin( new ConfigsPlugin() );
     chassis.registerPlugin( new MongoStore() );
     return chassis;
   }

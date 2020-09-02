@@ -1,7 +1,7 @@
 {
   "name": "api-service-cli",
   "description": "API services",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "cto@troven.co",
   "bin": {
     "a6s": "./bin/run"
@@ -14,7 +14,7 @@
     "@types/lodash": "^4.14.119",
     "@types/yamljs": "^0.2.31",
     "api-service-common": "^0.12.33",
-    "api-service-controller": "^0.10.0",
+    "api-service-controller": "^0.11.0",
     "api-service-core": "^0.55.57",
     "api-service-mongo": "^0.15.36",
     "assert": "^1.4.1",
