@@ -3,7 +3,7 @@ import { exec }  from 'child_process';
 import { writeFileSync } from 'fs'
 import default_config from "../init/default_config"
 import default_openapi from "../init/default_openapi"
-import * as Yaml from 'yamljs'
+import * as Yaml from 'js-yaml'
 
 export default class Init extends Command {
   static description = 'initialize working directory with ./config/ and ../oasv3/ folders'
@@ -36,8 +36,8 @@ export default class Init extends Command {
     exec('mkdir oasv3', this.handle_error);
     this.log("copying ...");
     const name: string = "a6s-init-example"
-    writeFileSync("config/default.yaml", Yaml.stringify(default_config(name),8));
-    writeFileSync("oasv3/default.yaml", Yaml.stringify(default_openapi(name),8));
+    writeFileSync("config/default.yaml", Yaml.safeDump(default_config(name)));
+    writeFileSync("oasv3/default.yaml", Yaml.safeDump(default_openapi(name)));
 
   }
 }
