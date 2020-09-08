@@ -3,7 +3,10 @@ import { Chassis } from "api-service-core";
 import { default_features  } from "api-service-common";
 import { MongoStore  } from "api-service-mongo";
 import { ControllerPlugin, ConfigsPlugin } from "api-service-controller";
+import {  MarkdownPlugin, PlantUML, Markdown } from "api-service-pages";
+
 import { existsSync } from 'fs'
+import LocalDBPlugin from '../plugins/LocalDB';
 
 export default class Start extends Command {
   static description = 'start the API services defined in the ./config/ file'
@@ -17,7 +20,7 @@ export default class Start extends Command {
     config: flags.string({char: 'c', description: 'specify a config file'}),
   }
 
-  static args = [{name: 'file'}]
+  // static args = [{name: 'file'}]
 
   static chassis() {
     const config = require("config");
@@ -28,6 +31,10 @@ export default class Start extends Command {
     chassis.registerPlugin( new ControllerPlugin() );
     chassis.registerPlugin( new ConfigsPlugin() );
     chassis.registerPlugin( new MongoStore() );
+    chassis.registerPlugin( new LocalDBPlugin() );
+    chassis.registerPlugin( new MarkdownPlugin() )
+    chassis.registerFn( new PlantUML() )
+    chassis.registerFn( new Markdown() )
     return chassis;
   }
 

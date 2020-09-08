@@ -17,7 +17,7 @@ export default class Init extends Command {
     force: flags.boolean({char: 'f'}),
   }
 
-  static args = [{name: 'file'}]
+  // static args = [{name: 'file'}]
 
   handle_error(err: any, stdout: any, stderr: any) {
     if (err) {

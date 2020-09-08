@@ -1,99 +1,117 @@
 name: a6s-init-example
 port: 5008
 auditor:
-    enabled: true
-    File:
-        filename: a6s-init-example.log
+  enabled: true
+  File:
+    filename: a6s-init-example.log
 logging:
+  enabled: true
+  Console:
     enabled: true
-    Console:
-        enabled: true
 features:
-    logging: null
-    payload:
-        enabled: true
-    cors:
-        enabled: true
-    prometheus:
-        enabled: true
-    jwt:
-        secret: false
-    pipeline:
-        before: null
-        after: null
-    openapi:
-        enabled: true
-        before: null
-        after: null
-    controller:
-        enabled: true
-        crd: false
-        folder: ./oasv3/
-    localdb:
-        database: example
+  logging:
+    enabled: true
+  payload:
+    enabled: true
+  cors:
+    enabled: true
+  prometheus:
+    enabled: true
+  jwt:
+    secret: false
+  pipeline: {}
+  configs:
+    uis:
+      crd: true
+      folder: "./k8s/uis"
+      every: 5
+      config:
+        features:
+        - basic
+        settings:
+          title: Example UI
+          showSettings: false
+          tagsView: true
+          fixedHeader: true
+          logo: "/logo.png"
+          errorLog:
+          - production
+          - development
+          public_routes:
+          - "/login"
+          - "/auth-redirect"
+        routes:
+          - $ref: home-ui
+  controller:
+    enabled: true
+    crd: false
+    folder: ./oasv3/
+  localdb:
+    database: example
+  openapi:
+    enabled: true
 openapi:
-    servers:
-        -
-            url: 'https://api.example.a6s.dev/'
-    info:
-        title: 'Controller OpenAPI for a6s-init-example'
-    paths:
-        /:
-            get:
-                summary: 'Open API docs'
-                feature:
-                    apidocs:
-                        enable: true
-                responses:
-                    '200':
-                        description: '200 response'
-                        content:
-                            application/json: {}
-        /datadict:
-            get:
-                summary: 'Open API docs'
-                feature:
-                    datadict:
-                        enable: true
-                responses:
-                    '200':
-                        description: '200 response'
-                        content:
-                            application/json: {}
-        /healthz:
-            get:
-                summary: 'Health check'
-                feature:
-                    heartbeat:
-                        enabled: true
-                responses:
-                    '200':
-                        description: '200 response'
-                        content:
-                            application/json: {schema: {$ref: '#/components/schemas/healthz'}}
-        /health:
-            get:
-                summary: 'Health check'
-                feature:
-                    jwt:
-                        claims: '-$.resource_access.account.roles = [ "api:health" ]'
-                    heartbeat:
-                        enabled: true
-                responses:
-                    '200':
-                        description: '200 response'
-                        content:
-                            application/json: {schema: {type: object, properties: {ok: {type: string}}}}
-    components:
-        schemas:
-            healthz:
-                type: object
-                properties:
-                    ok:
-                        type: string
-        securitySchemes:
-            oauth2_jwt:
-                type: http
-                scheme: bearer
-                description: 'JWT bearer key to authorize requests.'
-                bearerFormat: JWT
+  servers:
+    - url: 'https://api.example.a6s.dev/'
+  info:
+    title: Controller OpenAPI for a6s-init-example
+  paths:
+    /:
+      get:
+        summary: Open API docs
+        feature:
+          apidocs:
+            enable: true
+        responses:
+          '200':
+            description: 200 response
+            content:
+              application/json: {}
+    /ui:
+      get:
+        summary: UI Definition
+        feature:
+          ui.config:
+            enable: true
+        responses:
+          '200':
+            description: 200 response
+            content:
+              application/json: {}
+    /datadict:
+      get:
+        summary: Open API docs
+        feature:
+          datadict:
+            enable: true
+        responses:
+          '200':
+            description: 200 response
+            content:
+              application/json: {}
+    /healthz:
+      get:
+        summary: Health check
+        feature:
+          heartbeat:
+            enabled: true
+        responses:
+          '200':
+            description: 200 response
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/healthz'
+  components:
+    schemas:
+      healthz:
+        type: object
+        properties:
+          ok:
+            type: string
+    securitySchemes:
+      oauth2_jwt:
+        type: http
+        scheme: bearer
+        description: JWT bearer key to authorize requests.
+        bearerFormat: JWT

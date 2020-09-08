@@ -17,7 +17,7 @@ export default (name: string) => {
       }
     },
     "features": {
-      "logging": null,
+      "logging": { enabled: true},
       "payload": {
         "enabled": true
       },
@@ -31,13 +31,11 @@ export default (name: string) => {
         "secret": false
       },
       "pipeline": {
-        "before": null,
-        "after": null
+
       },
       "openapi": {
         "enabled": true,
-        "before": null,
-        "after": null
+
       },
       "controller": {
         "enabled": true,
@@ -111,36 +109,6 @@ export default (name: string) => {
                   "application/json": {
                     "schema": {
                       "$ref": "#/components/schemas/healthz"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "/health": {
-          "get": {
-            "summary": "Health check",
-            "feature": {
-              "jwt": {
-                "claims": "-$.resource_access.account.roles = [ \"api:health\" ]"
-              },
-              "heartbeat": {
-                "enabled": true
-              }
-            },
-            "responses": {
-              "200": {
-                "description": "200 response",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "type": "object",
-                      "properties": {
-                        "ok": {
-                          "type": "string"
-                        }
-                      }
                     }
                   }
                 }
