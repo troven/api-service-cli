@@ -1,7 +1,7 @@
 {
   "name": "api-service-cli",
   "description": "API services",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": "cto@troven.co",
   "bin": {
     "a6s": "./bin/run"
