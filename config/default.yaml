@@ -21,6 +21,9 @@ features:
     secret: false
   pipeline: {}
   configs:
+    apis:
+      crd: true
+      folder: "./k8s/oasv3"
     uis:
       crd: true
       folder: "./k8s/uis"
