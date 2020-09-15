@@ -14,14 +14,14 @@
     "@types/lodash": "^4.14.161",
     "@types/pouchdb": "^6.4.0",
     "@types/yamljs": "^0.2.31",
-    "api-service-controller": "^0.12.5",
+    "api-service-controller": "^0.12.6",
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.11",
     "pouchdb": "^7.2.2"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
-    "@types/node": "^10.17.29",
+    "@types/node": "^10.17.31",
     "globby": "^10",
     "json-loader": "^0.5.7",
     "source-map-support": "^0.5.10",

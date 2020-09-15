@@ -33,17 +33,54 @@ export default (name: string) => {
       "pipeline": {
 
       },
-      "openapi": {
-        "enabled": true,
-
-      },
       "controller": {
-        "enabled": true,
+        "enabled": false,
         "crd": false,
         "folder": "./oasv3/"
       },
+      "configs": {
+        "enabled": true,
+        "apis": {
+          "crd": true,
+          "folder": "./specs/oasv3"
+        },
+        "uis": {
+          "crd": true,
+          "folder": "./specs/uis",
+          "every": 5,
+          "config": {
+            "features": [
+              "basic"
+            ],
+            "settings": {
+              "title": "Example UI",
+              "showSettings": false,
+              "tagsView": true,
+              "fixedHeader": true,
+              "logo": "/logo.png",
+              "errorLog": [
+                "production",
+                "development"
+              ],
+              "public_routes": [
+                "/login",
+                "/auth-redirect"
+              ]
+            },
+            "routes": [
+              {
+                "$ref": "home-ui"
+              }
+            ]
+          }
+        }
+      },
       "localdb": {
         "database": "example"
+      },
+      "openapi": {
+        "enabled": true,
+
       }
     },
     "openapi": {

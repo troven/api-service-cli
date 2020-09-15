@@ -33,11 +33,11 @@ export default class Init extends Command {
 
     this.log("initializing ...");
     exec('mkdir config', this.handle_error);
-    exec('mkdir oasv3', this.handle_error);
+    exec('mkdir -p specs/openapis', this.handle_error);
     this.log("copying ...");
-    const name: string = "a6s-init-example"
+    const name: string = "a6s-example"
     writeFileSync("config/default.yaml", Yaml.safeDump(default_config(name)));
-    writeFileSync("oasv3/default.yaml", Yaml.safeDump(default_openapi(name)));
+    writeFileSync("specs/openapis/default.yaml", Yaml.safeDump(default_openapi(name)));
 
   }
 }
